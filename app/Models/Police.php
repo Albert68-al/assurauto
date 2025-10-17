@@ -9,6 +9,8 @@ class Police extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'polices';
+
     protected $fillable = [
         'client_id',
         'numero_police',

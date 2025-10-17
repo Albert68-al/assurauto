@@ -63,3 +63,25 @@ function confirmDelete(event) {
     }
     return true;
 }
+
+// Gestion des menus déroulants
+document.addEventListener('DOMContentLoaded', function() {
+    const submenuToggles = document.querySelectorAll('.nav-item.has-submenu > a');
+    
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parent = this.parentElement;
+            parent.classList.toggle('active');
+        });
+    });
+    
+    // Garder le menu parent actif quand un sous-menu est actif
+    const activeSubmenuItem = document.querySelector('.submenu .nav-link.active');
+    if (activeSubmenuItem) {
+        const parentSubmenu = activeSubmenuItem.closest('.has-submenu');
+        if (parentSubmenu) {
+            parentSubmenu.classList.add('active');
+        }
+    }
+});

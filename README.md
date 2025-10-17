@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -59,3 +60,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# Systeme-De-Gestion-Des-Assurances-Automobile
+Système de Gestion d’Assurance Automobile(Local &amp; COMESA). L’objectif principal est de digitaliser le processus complet d’assurance automobile — de l’inscription du client à la gestion des sinistres — tout en permettant une interopérabilité régionale.
+>>>>>>> 1d08167b58866fa67ffb54b0a5f5f0dd50bc1511

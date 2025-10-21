@@ -74,6 +74,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // COMESA
     Route::prefix('comesa')->name('comesa.')->group(function () {
         Route::get('/', [ComesaController::class, 'index'])->name('index');
+        // Routes pour la configuration COMESA (stockage local)
+        Route::get('/config', [ComesaController::class, 'getConfig'])->name('config.get');
+        Route::post('/config', [ComesaController::class, 'saveConfig'])->name('config.save');
+        // Routes pour les taux de change locaux
+        Route::get('/rates', [ComesaController::class, 'getRates'])->name('rates.get');
+        Route::post('/rates', [ComesaController::class, 'saveRates'])->name('rates.save');
+        // Routes for regional rules
+        Route::get('/rules', [ComesaController::class, 'getRules'])->name('rules.get');
+        Route::post('/rules', [ComesaController::class, 'saveRules'])->name('rules.save');
     });
 
     // Administration

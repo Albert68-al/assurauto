@@ -395,6 +395,13 @@ body {
     margin-bottom: 30px;
 }
 
+.stats-grid-client {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
 .stat-card {
     background: var(--bg-secondary);
     padding: 24px;
@@ -408,6 +415,16 @@ body {
     overflow: hidden;
 }
 
+.stat-card-client {
+    flex: 1 1 200px;
+    background: var(--bg-secondary);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
 .stat-card::before {
     content: '';
     position: absolute;
@@ -418,9 +435,38 @@ body {
     background: var(--primary);
 }
 
+.stat-card-client::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+} 
+
 .stat-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+.stat-card-client:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.notif-card {
+    margin-top: 20px;
+    background: var(--bg-secondary);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
 .stat-icon {
@@ -916,4 +962,257 @@ tbody tr:hover {
 
 .nav-item.has-submenu.active > a i.fa-chevron-down {
     transform: rotate(180deg);
+}
+
+/* ✅ Scoped styles under .vehicule-section */
+.vehicule-section .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.vehicule-section .header-actions {
+    margin-bottom: 20px;
+    margin-left: auto;
+    width: 20%;
+}
+
+.vehicule-section .vehicule-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.vehicule-section .vehicule-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: calc(50% - 10px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.vehicule-section .vehicule-card:hover {
+    transform: translateY(-4px);
+}
+
+.vehicule-section .vehicule-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #777;
+    font-size: 14px;
+}
+
+.vehicule-section .vehicule-photo.placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #777;
+    font-size: 14px;
+}
+
+.vehicule-section .vehicule-info {
+    padding: 15px;
+    flex: 1;
+}
+
+.vehicule-section .vehicule-info h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.vehicule-section .vehicule-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.vehicule-section .vehicule-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Buttons */
+.vehicule-section .btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.vehicule-section .btn-primary {
+    background: #2c5aa0;
+    color: white;
+}
+
+.vehicule-section .btn-danger {
+    padding: 12px;
+    background: #dc3545;
+    color: white;
+}
+
+.vehicule-section .btn:hover {
+    opacity: 0.9;
+}
+
+/* Form */
+.client-section .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.client-section .form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.client-section .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Alerts & errors */
+.client-section .alert.success {
+    background: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.client-section .error {
+    color: #d9534f;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* Client Section Scoped Styles */
+.client-section .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* Header actions */
+.client-section .header-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.client-section .header-actions .btn-primary {
+    background-color: #2c5aa0;
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.client-section .header-actions .btn-primary:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Success alert */
+.client-section .alert.success {
+    background-color: #9ad1ed;
+    color: #072973;
+    border-left: 5px solid #072973;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+/* Table styling */
+.client-section .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.client-section .table th,
+.client-section .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.client-section .table th {
+    background-color: #2c5aa0;
+    color: #fff;
+    font-weight: 600;
+}
+
+.client-section .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.client-section .table tr:hover {
+    background-color: #e9f5ff;
+}
+
+/* Buttons in table */
+.client-section .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.client-section .btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+}
+
+.client-section .btn-warning:hover {
+    background-color: #e0a800;
+    color: #212529;
+}
+
+.client-section .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.client-section .btn-danger:hover {
+    background-color: #c82333;
+    color: #fff;
+}
+
+.client-section .btn-secondary {
+    background: #dc3545;
+    color: white;
+    text-decoration: none;
+}
+/* Inline forms for delete button */
+.client-section form.d-inline {
+    display: inline-block;
+    margin: 0;
 }

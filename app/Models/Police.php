@@ -2,58 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Police extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'polices';
-
+    // Allow mass assignment for these fields
     protected $fillable = [
-        'client_id',
+        'vehicule_id',
         'numero_police',
-        'date_effet',
-        'date_echeance',
+        'date_debut',
+        'date_fin',
         'montant_prime',
         'statut',
-        'type_vehicule',
-        'immatriculation',
-        'marque',
-        'modele',
-        'annee',
-        'type_couverture',
         'garanties',
-        'franchises',
     ];
 
-    protected $dates = [
-        'date_effet',
-        'date_echeance',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
-    protected $casts = [
-        'garanties' => 'array',
-        'franchises' => 'array',
-        'montant_prime' => 'decimal:2',
-    ];
-
-    public function client()
+    /**
+     * Relationship: A police belongs to a vehicle
+     */
+    public function vehicule()
     {
-        return $this->belongsTo(Client::class);
-    }
-
-    public function sinistres()
-    {
-        return $this->hasMany(Sinistre::class);
-    }
-
-    public function getPeriodeAttribute()
-    {
-        return $this->date_effet->format('d/m/Y') . ' - ' . $this->date_echeance->format('d/m/Y');
+        return $this->belongsTo(Vehicule::class);
     }
 }

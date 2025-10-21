@@ -4,7 +4,7 @@
             <i class="fas fa-chart-line"></i>
             <span>Tableau de bord</span>
         </a>
-        <a href="{{ route('clients.index') }}" class="nav-item {{ request()->routeIs('clients.*') ? 'active' : '' }}" data-module="clients">
+        <a href="{{ route('client.dashboard.index') }}" class="nav-item {{ request()->routeIs('client.dashboard.*') ? 'active' : '' }}" data-module="clients">
             <i class="fas fa-users"></i>
             <span>Clients</span>
         </a>
@@ -12,11 +12,11 @@
             <i class="fas fa-file-contract"></i>
             <span>Produits</span>
         </a>
-        <a href="{{ route('polices.index') }}" class="nav-item {{ request()->routeIs('polices.*') ? 'active' : '' }}" data-module="polices">
+        <a href="{{ route('client.polices.index') }}" class="nav-item {{ request()->routeIs('client.polices.*') ? 'active' : '' }}" data-module="polices">
             <i class="fas fa-file-contract"></i>
             <span>Polices</span>
         </a>
-        <a href="{{ route('sinistres.index') }}" class="nav-item {{ request()->routeIs('sinistres.*') ? 'active' : '' }}" data-module="sinistres">
+        <a href="{{ route('client.sinistre.index') }}" class="nav-item {{ request()->routeIs('sinistres.*') ? 'active' : '' }}" data-module="sinistres">
             <i class="fas fa-car-crash"></i>
             <span>Sinistres</span>
         </a>

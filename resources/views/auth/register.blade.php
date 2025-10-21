@@ -157,7 +157,7 @@
                         <input type="tel" id="phone_number" name="phone_number" required 
                                value="{{ old('phone_number') }}"
                                placeholder="Votre numéro de téléphone" 
-                               pattern="[0-9]{10,15}"
+                               pattern="[0-9]{8,15}"
                                class="@error('phone_number') is-invalid @enderror">
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">

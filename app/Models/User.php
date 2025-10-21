@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin') || $this->isSuperAdmin();
     }
+
+    public function vehicules()
+    {
+        return $this->hasMany(Vehicule::class, 'user_id');
+    }
 }

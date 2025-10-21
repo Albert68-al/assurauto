@@ -3,10 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
-    ClientController,
     ProduitController,
-    PoliceController,
-    SinistreController,
     PaiementController,
     ComesaController,
     UserController,
@@ -16,6 +13,13 @@ use App\Http\Controllers\{
     RoleController,
     PermissionController
 };
+use App\Http\Controllers\Client\DashboardController;
+use App\Http\Controllers\Client\ProfileController;
+use App\Http\Controllers\Client\PoliceController;
+use App\Http\Controllers\Client\WalletController;
+use App\Http\Controllers\Client\SinistreController;
+use App\Http\Controllers\Client\VehiculeController;
+
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -54,12 +58,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Ressources communes
     Route::resources([
-        'clients' => ClientController::class,
         'produits' => ProduitController::class,
-        'polices' => PoliceController::class,
-        'sinistres' => SinistreController::class,
         'paiements' => PaiementController::class,
     ]);
+
+    Route::prefix('client')->name('client.')->group(function () {
+        Route::get('/clientdashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::resource('vehicules', VehiculeController::class);
+        Route::resource('/polices', PoliceController::class);
+        Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/wallets', [WalletController::class, 'index'])->name('wallet.index');
+        Route::get('/sinistres', [SinistreController::class, 'index'])->name('sinistre.index');
+    });
 
     // COMESA
     Route::prefix('comesa')->name('comesa.')->group(function () {

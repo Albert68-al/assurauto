@@ -27,7 +27,30 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                        </div>
+
+                        <!-- Règles Régionales Card (moved to left column) -->
+                        <div class="card border-0 shadow-sm mt-4">
+                            <div class="card-header bg-warning text-dark py-3">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-gavel me-2"></i>Règles régionales
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted mb-3">Définissez ici des règles qui s'appliquent lorsque la police couvre plusieurs pays COMESA.</p>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Règles régionales</label>
+                                    <textarea id="regionalRules_left" class="form-control" rows="5" placeholder='{"règle1":"..."}'>{
+
+}</textarea>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button id="saveRulesBtn_left" class="btn btn-primary px-4">
+                                        <i class="fas fa-save me-2"></i>Enregistrer règles
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
             </div>
 
             <!-- Main Content Grid - 2 columns layout -->
@@ -121,31 +144,37 @@
                         </div>
                     </div>
 
-                    <!-- Règles Régionales Card -->
+                    <!-- Edit Configuration Card (right column, below Taux locaux) -->
                     <div class="card border-0 shadow-sm mt-4">
-                        <div class="card-header bg-warning text-dark py-3">
+                        <div class="card-header bg-info text-white py-3">
                             <h5 class="mb-0">
-                                <i class="fas fa-gavel me-2"></i>Règles régionales
+                                <i class="fas fa-flag me-2"></i>Éditer la configuration du pays
                             </h5>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted mb-4">
-                                Définissez ici des règles qui s'appliquent lorsque la police couvre plusieurs pays COMESA.
-                            </p>
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold">Règles régionales</label>
-                                <textarea id="regionalRules" class="form-control" rows="6" placeholder='{
-    "règle1": "Description de la règle 1",
-    "règle2": "Description de la règle 2"
-}'>{
-
-}</textarea>
+                            <p class="text-muted mb-3">Editez directement les paramètres du pays sélectionné.</p>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Pays</label>
+                                <input type="text" id="edit_country_name" class="form-control text-center fw-semibold bg-white border-0 shadow-sm" readonly>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button id="saveRulesBtn" class="btn btn-primary px-4">
-                                    <i class="fas fa-save me-2"></i>Enregistrer règles
-                                </button>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold">Taux (%)</label>
+                                    <input type="number" id="edit_taux" class="form-control" step="0.01" placeholder="0.00">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold">TVA (%)</label>
+                                    <input type="number" id="edit_tva" class="form-control" step="0.01" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label class="form-label fw-semibold">Législation</label>
+                                <textarea id="edit_legislation" class="form-control" rows="4" placeholder="Notes législatives..."></textarea>
+                            </div>
+                            <input type="hidden" id="edit_country_id">
+                            <div class="d-flex justify-content-end mt-3 gap-2">
+                                <button id="editCancelBtn" class="btn btn-outline-secondary">Annuler</button>
+                                <button id="saveEditBtn" class="btn btn-primary">Enregistrer</button>
                             </div>
                         </div>
                     </div>
@@ -155,72 +184,7 @@
     </div>
 </div>
 
-<!-- Modal de configuration pays -->
-<div class="modal fade" id="configModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0 shadow-lg rounded-4">
-            <!-- Header -->
-            <div class="modal-header bg-gradient-primary text-white py-3 rounded-top-4">
-                <h5 class="modal-title fw-bold">
-                    <i class="fas fa-flag me-2"></i>Éditer la configuration du pays
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Body -->
-            <div class="modal-body bg-light">
-                <form id="configForm" class="mx-auto" style="max-width: 650px;">
-                    <div class="text-center mb-4">
-                        <h6 class="text-primary fw-semibold mb-1">Informations générales</h6>
-                        <p class="text-muted mb-0 small">Remplissez les détails spécifiques au pays sélectionné</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold text-primary">Pays</label>
-                        <input type="text" id="modal_country_name" 
-                               class="form-control form-control-lg text-center bg-white border-0 shadow-sm fw-semibold" 
-                               readonly>
-                    </div>
-
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold text-primary">Taux (%)</label>
-                            <input type="number" id="modal_taux" 
-                                   class="form-control bg-white border-0 shadow-sm text-center fw-semibold" 
-                                   step="0.01" placeholder="0.00">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold text-primary">TVA (%)</label>
-                            <input type="number" id="modal_tva" 
-                                   class="form-control bg-white border-0 shadow-sm text-center fw-semibold" 
-                                   step="0.01" placeholder="0.00">
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <label class="form-label fw-semibold text-primary">Législation</label>
-                        <textarea id="modal_legislation" 
-                                  class="form-control bg-white border-0 shadow-sm" 
-                                  rows="4" 
-                                  placeholder="Décrivez ici les détails de la législation..."></textarea>
-                    </div>
-
-                    <input type="hidden" id="modal_country_id">
-                </form>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer border-top-0 d-flex justify-content-center py-3">
-                <button type="button" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-1"></i> Annuler
-                </button>
-                <button type="button" id="modalSaveConfigBtn" class="btn btn-primary rounded-pill px-4 shadow-sm">
-                    <i class="fas fa-save me-1"></i> Enregistrer
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- modal removed: in-page editor used instead -->
 
 @push('styles')
 <style>
@@ -535,16 +499,16 @@ body {
 document.addEventListener('DOMContentLoaded', function(){
     const countrySelect = document.getElementById('countrySelect');
     const saveAllBtn = document.getElementById('saveAllBtn');
-    const saveRulesBtn = document.getElementById('saveRulesBtn');
+    const saveRulesBtn = document.getElementById('saveRulesBtn_left');
 
-    // modal fields
-    const modal = new bootstrap.Modal(document.getElementById('configModal'));
-    const modalCountryName = document.getElementById('modal_country_name');
-    const modalTaux = document.getElementById('modal_taux');
-    const modalTva = document.getElementById('modal_tva');
-    const modalLeg = document.getElementById('modal_legislation');
-    const modalCountryId = document.getElementById('modal_country_id');
-    const modalSaveBtn = document.getElementById('modalSaveConfigBtn');
+    // in-page editor fields (replaces modal workflow)
+    const editCountryName = document.getElementById('edit_country_name');
+    const editTaux = document.getElementById('edit_taux');
+    const editTva = document.getElementById('edit_tva');
+    const editLeg = document.getElementById('edit_legislation');
+    const editCountryId = document.getElementById('edit_country_id');
+    const saveEditBtn = document.getElementById('saveEditBtn');
+    const editCancelBtn = document.getElementById('editCancelBtn');
 
     async function loadConfig(){
         const res = await fetch('{{ route('comesa.config.get') }}');
@@ -642,15 +606,16 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    // open modal helper
-    function openModalForCountry(id){
+    // open in-page editor helper
+    function openEditForCountry(id){
         const item = window.comesaConfig[id] || {};
-        modalCountryId.value = id;
-        modalCountryName.value = paysMap[id] ? paysMap[id].name + ' ('+paysMap[id].code+')' : id;
-        modalTaux.value = item.taux || '';
-        modalTva.value = item.tva || '';
-        modalLeg.value = item.legislation || '';
-        modal.show();
+        editCountryId.value = id;
+        editCountryName.value = paysMap[id] ? paysMap[id].name + ' ('+paysMap[id].code+')' : id;
+        editTaux.value = item.taux || '';
+        editTva.value = item.tva || '';
+        editLeg.value = item.legislation || '';
+        // bring editor into view
+        editCountryName.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     // events: add rate
@@ -720,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    // add config (opens modal to edit right away)
+    // add config (opens in-page editor to edit right away)
     document.getElementById('addConfigBtn').addEventListener('click', function(){
         const id = document.getElementById('countrySelect').value;
         if(!id){ 
@@ -732,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function(){
             window.comesaConfig[id] = { taux: 0, tva: 0, legislation: '' };
         }
         renderConfigs();
-        openModalForCountry(id);
+        openEditForCountry(id);
     });
 
     // table actions (edit/delete)
@@ -741,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const del = e.target.closest('.delete-config');
         if(edit){
             const id = edit.dataset.id;
-            openModalForCountry(id);
+            openEditForCountry(id);
         }
         if(del){
             const id = del.dataset.id;
@@ -763,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function(){
             window.comesaConfig[id] = { taux: 0, tva: 0, legislation: '' };
         }
         renderConfigs();
-        openModalForCountry(id);
+        openEditForCountry(id);
     });
 
     async function awaitSaveConfig(){
@@ -779,23 +744,32 @@ document.addEventListener('DOMContentLoaded', function(){
         renderConfigs();
     }
 
-    // modal save
-    modalSaveBtn.addEventListener('click', function(){
-        const id = modalCountryId.value;
-        if(!id) return;
+    // in-page editor save
+    saveEditBtn.addEventListener('click', function(){
+        const id = editCountryId.value;
+        if(!id) { alert('Aucun pays sélectionné'); return; }
         window.comesaConfig = window.comesaConfig || {};
         window.comesaConfig[id] = { 
-            taux: parseFloat(modalTaux.value) || 0, 
-            tva: parseFloat(modalTva.value) || 0, 
-            legislation: modalLeg.value 
+            taux: parseFloat(editTaux.value) || 0, 
+            tva: parseFloat(editTva.value) || 0, 
+            legislation: editLeg.value 
         };
         awaitSaveConfig();
-        modal.hide();
+        alert('Configuration sauvegardée.');
+    });
+
+    // cancel edits
+    editCancelBtn.addEventListener('click', function(){
+        editCountryId.value = '';
+        editCountryName.value = '';
+        editTaux.value = '';
+        editTva.value = '';
+        editLeg.value = '';
     });
 
     // save rules
     saveRulesBtn.addEventListener('click', async function(){
-        const rules = document.getElementById('regionalRules').value;
+        const rules = document.getElementById('regionalRules_left').value;
         try {
             JSON.parse(rules); // Validate JSON
             await fetch('{{ route('comesa.rules.save') }}', {
@@ -835,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function(){
         });
         
         // Save rules
-        const rules = document.getElementById('regionalRules').value;
+        const rules = document.getElementById('regionalRules_left').value;
         try {
             JSON.parse(rules);
             await fetch('{{ route('comesa.rules.save') }}', {

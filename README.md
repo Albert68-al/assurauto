@@ -68,3 +68,12 @@ Système de Gestion d’Assurance Automobile(Local &amp; COMESA). L’objectif p
 =======
 # assurauto
 >>>>>>> 81849cfbaffc18fda253a80d5db2639d36c6c03e
+
+
+
+Before running the app :
+
+ -Open your .env file and update the SESSION_DRIVER value: SESSION_DRIVER=file
+    (Replace "database" with "file" if needed.)
+
+ -If you previously used the database session driver, delete the sessions table from your migrations to avoid conflicts.

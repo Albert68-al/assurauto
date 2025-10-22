@@ -165,7 +165,7 @@
                                             </td>
                                         </tr>
 
-                                        <!-- Modal de suppression -->
+                                        <!-- Modal de suppression
                                         <div class="modal fade" id="deleteModal{{ $produit->id }}" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content border-0 shadow">
@@ -174,8 +174,8 @@
                                                             <i class="fas fa-exclamation-triangle me-2"></i> Confirmation
                                                         </h5>
                                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                                    </div> -->
+                                                    <!-- <div class="modal-body">
                                                         <p>Êtes-vous sûr de vouloir supprimer le produit <strong>"{{ $produit->nom }}"</strong> ?</p>
                                                         <p class="text-muted mb-0">Cette action est irréversible.</p>
                                                     </div>
@@ -186,7 +186,7 @@
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="fas fa-trash me-1"></i> Supprimer
-                                                            </button>
+                                                            </button> -->
                                                         </form>
                                                     </div>
                                                 </div>

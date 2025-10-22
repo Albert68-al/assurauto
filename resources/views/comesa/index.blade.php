@@ -16,9 +16,9 @@
             <!-- Header Section -->
             <div class="card border-0 shadow-sm rounded-3 mb-4">
                 <div class="card-header bg-white py-3 text-center">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0 text-primary">Module COMESA</h3>
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <div class="Title">
+                            <h3 class="mb-0 text-primary" >Module COMESA</h3>
                             <small class="text-muted">Gestion multi-pays, taux locaux et règles régionales</small>
                         </div>
                         <div>
@@ -27,161 +27,161 @@
                             </button>
                         </div>
                     </div>
-                        </div>
-
-                        <!-- Règles Régionales Card (moved to left column) -->
-                        <div class="card border-0 shadow-sm mt-4">
-                            <div class="card-header bg-warning text-dark py-3">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-gavel me-2"></i>Règles régionales
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <p class="text-muted mb-3">Définissez ici des règles qui s'appliquent lorsque la police couvre plusieurs pays COMESA.</p>
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">Règles régionales</label>
-                                    <textarea id="regionalRules_left" class="form-control" rows="5" placeholder='{"règle1":"..."}'>{
-
-}</textarea>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button id="saveRulesBtn_left" class="btn btn-primary px-4">
-                                        <i class="fas fa-save me-2"></i>Enregistrer règles
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                </div>
             </div>
 
-            <!-- Main Content Grid - 2 columns layout -->
-            <div class="row g-4">
-                <!-- Left Column -->
-                <div class="col-lg-6">
-                    <!-- Configuration Card -->
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-header bg-primary text-white py-3">
-                            <h5 class="mb-0">
-                                <i class="fas fa-cogs me-2"></i>Configuration par pays
-                            </h5>
-                        </div>
+            <!-- Règles Régionales Card (moved to left column) -->
+                <div class="card-container">
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-header bg-warning text-dark py-3" style="text-align: center ">
+                            <h5 class="mb-0">  <i class="fas fa-gavel me-2"></i>Règles régionales </h5>
+                           </div>
                         <div class="card-body">
-                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
-                                <div class="mb-3 mb-md-0">
-                                    <h6 class="text-dark mb-2">Sélectionner un pays</h6>
-                                    <div class="d-flex flex-column flex-sm-row gap-2">
-                                        <select id="countrySelect" class="form-select" style="width:220px">
-                                            <option value="">-- Choisir un pays --</option>
-                                            @foreach(\App\Models\Pays::orderBy('nom')->get() as $p)
-                                                <option value="{{ $p->id }}">{{ $p->nom }} ({{ $p->code }})</option>
-                                            @endforeach
-                                        </select>
-                                        <button id="addConfigBtn" class="btn btn-outline-primary">
-                                            <i class="fas fa-plus me-2"></i>Ajouter
+                                    <p class="text-muted mb-3">Définissez ici des règles qui s'appliquent lorsque la police couvre plusieurs pays COMESA.</p>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Règles régionales</label>
+                                        <textarea id="regionalRules_left" class="form-control" rows="5" placeholder='{"règle1":"..."}'>{}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button id="saveRulesBtn_left" class="btn btn-primary px-4">
+                                            <i class="fas fa-save me-2"></i>Enregistrer règles
                                         </button>
                                     </div>
                                 </div>
                             </div>
+                    </div>
 
-                            <!-- Country badges grid -->
-                            <div class="mb-4">
-                                <h6 class="text-dark mb-3">Pays disponibles</h6>
-                                <div id="countryBadges" class="country-badges">
-                                    @foreach(\App\Models\Pays::orderBy('nom')->get() as $p)
-                                        <div class="badge-item" data-id="{{ $p->id }}">
-                                            <span>{{ $p->nom }} ({{ $p->code }})</span>
-                                            <i class="fas fa-check ms-2"></i>
+                     <!-- Main Content Grid - 2 columns layout -->
+                    <div class="row g-4">
+                    <!-- Left Column -->
+                    <div class="col-lg-6">
+                        <!-- Configuration Card -->
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-primary text-white py-3">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-cogs me-2" style="text-align: center"></i>Configuration par pays
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+                                    <div class="mb-3 mb-md-0">
+                                        <h6 class="text-dark mb-2">Sélectionner un pays</h6>
+                                        <div class="d-flex flex-column flex-sm-row gap-2">
+                                            <select id="countrySelect" class="form-select" style="width:220px">
+                                                <option value="">-- Choisir un pays --</option>
+                                                @foreach(\App\Models\Pays::orderBy('nom')->get() as $p)
+                                                    <option value="{{ $p->id }}">{{ $p->nom }} ({{ $p->code }})</option>
+                                                @endforeach
+                                            </select>
+                                            <button id="addConfigBtn" class="btn btn-outline-primary">
+                                                <i class="fas fa-plus me-2"></i>Ajouter
+                                            </button>
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Configurations Table -->
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0" id="configsTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="ps-3">Pays</th>
-                                            <th style="width:90px">Taux (%)</th>
-                                            <th style="width:90px">TVA (%)</th>
-                                            <th style="width:120px" class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- rows generated by JS -->
-                                    </tbody>
-                                </table>
+                                <!-- Country badges grid -->
+                                <div class="mb-4">
+                                    <h6 class="text-dark mb-3">Pays disponibles</h6>
+                                    <div id="countryBadges" class="country-badges">
+                                        @foreach(\App\Models\Pays::orderBy('nom')->get() as $p)
+                                            <div class="badge-item" data-id="{{ $p->id }}">
+                                                <span>{{ $p->nom }} ({{ $p->code }})</span>
+                                                <i class="fas fa-check ms-2"></i>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <!-- Configurations Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0" id="configsTable">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="ps-3">Pays</th>
+                                                <th style="width:90px">Taux (%)</th>
+                                                <th style="width:90px">TVA (%)</th>
+                                                <th style="width:120px" class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- rows generated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Right Column -->
+                    <div class="col-lg-6">
+                        <!-- Taux Locaux Card -->
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-success text-white py-3">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-chart-line me-2"></i>Taux locaux
+                                </h5>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <p class="text-muted mb-4">
+                                    Gérer localement les taux de change (simule une mise à jour automatique).
+                                </p>
+                                
+                                <div id="ratesList" class="rates-container flex-grow-1 mb-4">
+                                    <!-- Les taux seront générés ici -->
+                                </div>
+                                
+                                <div class="rates-actions mt-auto">
+                                    <button id="addRateBtn" class="btn btn-outline-primary me-2">
+                                        <i class="fas fa-plus me-2"></i>Ajouter un taux
+                                    </button>
+                                    <button id="saveRatesBtn" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Enregistrer les taux
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Configuration Card (right column, below Taux locaux) -->
+                        <div class="card border-0 shadow-sm mt-4">
+                            <div class="card-header bg-info text-white py-3">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-flag me-2"></i>Éditer la configuration du pays
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted mb-3">Editez directement les paramètres du pays sélectionné.</p>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Pays</label>
+                                    <input type="text" id="edit_country_name" class="form-control text-center fw-semibold bg-white border-0 shadow-sm" readonly>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <label class="form-label fw-semibold">Taux (%)</label>
+                                        <input type="number" id="edit_taux" class="form-control" step="0.01" placeholder="0.00">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-semibold">TVA (%)</label>
+                                        <input type="number" id="edit_tva" class="form-control" step="0.01" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <label class="form-label fw-semibold">Législation</label>
+                                    <textarea id="edit_legislation" class="form-control" rows="4" placeholder="Notes législatives..."></textarea>
+                                </div>
+                                <input type="hidden" id="edit_country_id">
+                                <div class="d-flex justify-content-end mt-3 gap-2">
+                                    <button id="editCancelBtn" class="btn btn-outline-secondary">Annuler</button>
+                                    <button id="saveEditBtn" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
                 </div>
 
-                <!-- Right Column -->
-                <div class="col-lg-6">
-                    <!-- Taux Locaux Card -->
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-header bg-success text-white py-3">
-                            <h5 class="mb-0">
-                                <i class="fas fa-chart-line me-2"></i>Taux locaux
-                            </h5>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <p class="text-muted mb-4">
-                                Gérer localement les taux de change (simule une mise à jour automatique).
-                            </p>
-                            
-                            <div id="ratesList" class="rates-container flex-grow-1 mb-4">
-                                <!-- Les taux seront générés ici -->
-                            </div>
-                            
-                            <div class="rates-actions mt-auto">
-                                <button id="addRateBtn" class="btn btn-outline-primary me-2">
-                                    <i class="fas fa-plus me-2"></i>Ajouter un taux
-                                </button>
-                                <button id="saveRatesBtn" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Enregistrer les taux
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Edit Configuration Card (right column, below Taux locaux) -->
-                    <div class="card border-0 shadow-sm mt-4">
-                        <div class="card-header bg-info text-white py-3">
-                            <h5 class="mb-0">
-                                <i class="fas fa-flag me-2"></i>Éditer la configuration du pays
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="text-muted mb-3">Editez directement les paramètres du pays sélectionné.</p>
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Pays</label>
-                                <input type="text" id="edit_country_name" class="form-control text-center fw-semibold bg-white border-0 shadow-sm" readonly>
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-6">
-                                    <label class="form-label fw-semibold">Taux (%)</label>
-                                    <input type="number" id="edit_taux" class="form-control" step="0.01" placeholder="0.00">
-                                </div>
-                                <div class="col-6">
-                                    <label class="form-label fw-semibold">TVA (%)</label>
-                                    <input type="number" id="edit_tva" class="form-control" step="0.01" placeholder="0.00">
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label fw-semibold">Législation</label>
-                                <textarea id="edit_legislation" class="form-control" rows="4" placeholder="Notes législatives..."></textarea>
-                            </div>
-                            <input type="hidden" id="edit_country_id">
-                            <div class="d-flex justify-content-end mt-3 gap-2">
-                                <button id="editCancelBtn" class="btn btn-outline-secondary">Annuler</button>
-                                <button id="saveEditBtn" class="btn btn-primary">Enregistrer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+</div>
 </div>
 
 <!-- modal removed: in-page editor used instead -->
@@ -202,6 +202,10 @@
 body {
     background: #f7f9fb;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Title{
+    text-align:center;
 }
 
 .card {
@@ -246,6 +250,9 @@ body {
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content:center;
+    gap: 50px;
 }
 
 .breadcrumb-item a {
@@ -399,9 +406,16 @@ body {
 /* Rates container */
 .rates-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
     min-height: 150px;
+}
+
+.card-container{
+    display: flex;
+    flex-wrap:wrap;
+    gap :20px;
+    
 }
 
 .rate-row {

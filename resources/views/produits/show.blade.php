@@ -14,76 +14,65 @@
                 </ol>
             </nav>
 
-            <div class="card">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card products-show-card shadow-sm">
+                <div class="card-header bg-primary text-white text-center py-3">
                     <h3 class="mb-0">
                         <i class="fas fa-cube me-2"></i>{{ $produit->nom }}
                     </h3>
-                    <div>
+                </div>
+
+                <div class="card-body text-center">
+                    <div class="mb-3">
                         <a href="{{ route('produits.edit', $produit) }}" class="btn btn-light btn-sm me-2">
                             <i class="fas fa-edit me-1"></i> Modifier
                         </a>
-                        <a href="{{ route('produits.index') }}" class="btn btn-outline-light btn-sm">
+                        <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-arrow-left me-1"></i> Retour
                         </a>
                     </div>
-                </div>
-                
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-md-8">
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
-                                        <i class="fas fa-cube fa-2x text-primary"></i>
-                                    </div>
+
+                    <div class="row justify-content-center align-items-center mb-4">
+                        <div class="col-12 col-md-7">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="avatar bg-white rounded-circle p-3 shadow-sm mb-3">
+                                    <i class="fas fa-cube fa-2x text-primary"></i>
                                 </div>
-                                <div>
-                                    <h2 class="mb-1">{{ $produit->nom }}</h2>
-                                    <div class="d-flex align-items-center">
-                                        <span class="badge {{ $produit->actif ? 'bg-success' : 'bg-secondary' }} me-2">
-                                            {{ $produit->actif ? 'Actif' : 'Inactif' }}
-                                        </span>
-                                        <span class="text-muted small">
-                                            <i class="far fa-clock me-1"></i>
-                                            Mis à jour le {{ $produit->updated_at->format('d/m/Y à H:i') }}
-                                        </span>
-                                    </div>
+                                <h2 class="mb-1">{{ $produit->nom }}</h2>
+                                <div class="mb-2">
+                                    <span class="badge {{ $produit->actif ? 'bg-success' : 'bg-secondary' }} me-2">
+                                        {{ $produit->actif ? 'Actif' : 'Inactif' }}
+                                    </span>
+                                    <small class="text-muted"><i class="far fa-clock me-1"></i>Mis à jour le {{ $produit->updated_at->format('d/m/Y à H:i') }}</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 text-end">
-                            <div class="h3 mb-0 text-primary">
-                                {{ number_format($produit->tarif_base, 2, ',', ' ') }} {{ $produit->devise }}
-                            </div>
-                            <div class="text-muted">Tarif de base HT</div>
-                            
+
+                        <div class="col-12 col-md-3 mt-3 mt-md-0 text-center">
                             @php
                                 $montantAvecTaux = $produit->tarif_base * (1 + ($produit->taux / 100));
                                 $montantTTC = $montantAvecTaux * (1 + ($produit->tva / 100));
                             @endphp
-                            
-                            <div class="mt-2">
-                                <span class="badge bg-light text-dark">
-                                    Taux: {{ $produit->taux > 0 ? $produit->taux . '%' : 'Aucun' }} | 
-                                    TVA: {{ $produit->tva > 0 ? $produit->tva . '%' : 'Aucune' }}
-                                </span>
+                            <div class="h3 mb-0 text-primary fw-bold">{{ number_format($produit->tarif_base, 2, ',', ' ') }} {{ $produit->devise }}</div>
+                            <div class="text-muted small">Tarif de base HT</div>
+                            <div class="mt-3">
+                                <div class="d-inline-block px-3 py-1 rounded-3 bg-white shadow-sm">
+                                    <small class="text-muted me-2">Taux:</small>
+                                    <strong class="me-3">{{ $produit->taux > 0 ? $produit->taux . '%' : 'Aucun' }}</strong>
+                                    <small class="text-muted me-2">TVA:</small>
+                                    <strong>{{ $produit->tva > 0 ? $produit->tva . '%' : 'Aucune' }}</strong>
+                                </div>
                             </div>
-                            <div class="h5 mt-2">
-                                TTC: {{ number_format($montantTTC, 2, ',', ' ') }} {{ $produit->devise }}
-                            </div>
+                            <div class="h5 mt-2 fw-semibold">TTC: <span class="text-primary">{{ number_format($montantTTC, 2, ',', ' ') }}</span> {{ $produit->devise }}</div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card mb-4">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8">
+                            <div class="card mb-3">
                                 <div class="card-header bg-light">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-info-circle me-2"></i>Description et couverture
-                                    </h5>
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Description et couverture</h5>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-start">
                                     @if($produit->description)
                                         <h6>Description</h6>
                                         <div class="p-3 bg-light rounded mb-4">
@@ -100,9 +89,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-light">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-history me-2"></i>Historique des modifications
-                                    </h5>
+                                    <h5 class="mb-0"><i class="fas fa-history me-2"></i>Historique des modifications</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="timeline">
@@ -111,13 +98,9 @@
                                             <div class="timeline-content">
                                                 <div class="d-flex justify-content-between">
                                                     <h6 class="mb-1">Création du produit</h6>
-                                                    <small class="text-muted">
-                                                        {{ $produit->created_at->format('d/m/Y à H:i') }}
-                                                    </small>
+                                                    <small class="text-muted">{{ $produit->created_at->format('d/m/Y à H:i') }}</small>
                                                 </div>
-                                                <p class="mb-0 small text-muted">
-                                                    Par {{ $produit->user?->name ?? 'Utilisateur inconnu' }}
-                                                </p>
+                                                <p class="mb-0 small text-muted">Par {{ $produit->user?->name ?? 'Utilisateur inconnu' }}</p>
                                             </div>
                                         </div>
                                         <div class="timeline-item">
@@ -125,96 +108,29 @@
                                             <div class="timeline-content">
                                                 <div class="d-flex justify-content-between">
                                                     <h6 class="mb-1">Dernière mise à jour</h6>
-                                                    <small class="text-muted">
-                                                        {{ $produit->updated_at->format('d/m/Y à H:i') }}
-                                                    </small>
+                                                    <small class="text-muted">{{ $produit->updated_at->format('d/m/Y à H:i') }}</small>
                                                 </div>
-                                                <p class="mb-0 small text-muted">
-                                                    Modifications apportées
-                                                </p>
+                                                <p class="mb-0 small text-muted">Modifications apportées</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-cog me-2"></i>Configuration
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <h6>Pays</h6>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-flag me-2 text-muted"></i>
-                                            <span>{{ $produit->pays->nom ?? 'Non spécifié' }} ({{ $produit->pays->code ?? 'N/A' }})</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <h6>Devise</h6>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-money-bill-wave me-2 text-muted"></i>
-                                            <span>{{ $produit->devise }} ({{ $produit->pays->devise ?? 'N/A' }})</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <h6>Statut</h6>
-                                        <div class="d-flex align-items-center">
-                                            <div class="me-2">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input toggle-status" type="checkbox" 
-                                                           data-id="{{ $produit->id }}" 
-                                                           id="toggle-{{ $produit->id }}"
-                                                           {{ $produit->actif ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="toggle-{{ $produit->id }}">
-                                                        <span class="badge {{ $produit->actif ? 'bg-success' : 'bg-secondary' }}">
-                                                            {{ $produit->actif ? 'Actif' : 'Inactif' }}
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <h6>Date de création</h6>
-                                        <div class="d-flex align-items-center">
-                                            <i class="far fa-calendar-alt me-2 text-muted"></i>
-                                            <span>{{ $produit->created_at->format('d/m/Y') }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <h6>Dernière mise à jour</h6>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-sync-alt me-2 text-muted"></i>
-                                            <span>{{ $produit->updated_at->diffForHumans() }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-shield-alt me-2"></i>Politiques
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                            <i class="fas fa-trash-alt me-1"></i> Supprimer ce produit
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Toast container -->
+            <div aria-live="polite" aria-atomic="true" class="position-relative">
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="statusToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Notification</strong>
+                            <small class="text-muted"></small>
+                            <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
+                        <div class="toast-body"></div>
                     </div>
                 </div>
             </div>
@@ -235,7 +151,7 @@
             <div class="modal-body">
                 <p>Êtes-vous sûr de vouloir supprimer définitivement ce produit ?</p>
                 <p class="mb-0">
-                    <strong>Nom :</strong> {{ $produit->name }}<br>
+                    <strong>Nom :</strong> {{ $produit->nom }}<br>
                     <strong>Référence :</strong> #{{ str_pad($produit->id, 6, '0', STR_PAD_LEFT) }}
                 </p>
                 <div class="alert alert-warning mt-3">

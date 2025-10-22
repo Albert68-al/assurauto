@@ -96,7 +96,7 @@ class ProduitController extends Controller
      */
     public function edit(Produit $produit)
     {
-        $pays = Pays::actif()->get();
+        $pays = Pays::where('actif', true)->get();
         $devises = $this->getDevisesDisponibles();
         
         return view('produits.edit', compact('produit', 'pays', 'devises'));

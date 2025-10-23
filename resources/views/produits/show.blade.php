@@ -235,7 +235,7 @@
             <div class="modal-body">
                 <p>Êtes-vous sûr de vouloir supprimer définitivement ce produit ?</p>
                 <p class="mb-0">
-                    <strong>Nom :</strong> {{ $produit->name }}<br>
+                    <strong>Nom :</strong> {{ $produit->nom }}<br>
                     <strong>Référence :</strong> #{{ str_pad($produit->id, 6, '0', STR_PAD_LEFT) }}
                 </p>
                 <div class="alert alert-warning mt-3">
@@ -262,35 +262,252 @@
 
 @push('styles')
 <style>
-    .timeline {
-        position: relative;
-        padding-left: 1.5rem;
-    }
-    .timeline-item {
-        position: relative;
-        padding-bottom: 1.5rem;
-        padding-left: 1.5rem;
-        border-left: 1px solid #e9ecef;
-    }
-    .timeline-item:last-child {
-        padding-bottom: 0;
-        border-left: 1px solid transparent;
-    }
-    .timeline-marker {
-        position: absolute;
-        left: -0.5rem;
-        width: 1rem;
-        height: 1rem;
-        border-radius: 100%;
-        border: 2px solid #fff;
-        margin-top: 0.25rem;
-    }
-    .timeline-content {
-        padding-left: 0.5rem;
-    }
-    .bg-opacity-10 {
-        opacity: 0.1;
-    }
+:root{
+    --page-bg: #f8f9fa;
+    --text-color: #0b0f14;
+    --muted: #6c757d;
+    --accent: #007bff;
+    --card-bg: #ffffffd9;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-strong: 0 6px 18px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --timeline-line: #dee2e6;
+    --success-soft: #e6fbf0;
+    --success-text: #1f8a44;
+    --inactive-soft: #f1f3f5;
+}
+
+/* Page base */
+body {
+    background-color: var(--page-bg) !important;
+    color: var(--text-color);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Center and constrain main card */
+.products-show-card {
+    max-width: 1000px;
+    margin: 2rem auto;
+    border: none;
+    background: transparent;
+    padding: 0 1rem;
+}
+
+/* Header area (product name) */
+.products-show-card .card-header {
+    background: linear-gradient(180deg,var(--accent), #0069d9);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+/* Main body card */
+.products-show-card .card-body {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: calc(var(--radius) - 2px);
+    box-shadow: var(--shadow-sm);
+    margin-top: 0.75rem;
+    animation: cardFadeUp 360ms ease both;
+}
+
+/* Headings and muted text */
+.products-show-card h2,
+.products-show-card h3,
+.products-show-card h5 {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.products-show-card .text-muted,
+.products-show-card small {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* Avatar / icon */
+.products-show-card .avatar {
+    width: 88px;
+    height: 88px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(11,15,20,0.06);
+}
+
+/* Price block */
+.products-show-card .price-base {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+/* Controls/buttons */
+.products-show-card .btn {
+    border-radius: 999px;
+    transition: transform .14s ease, box-shadow .14s ease, background-color .14s ease;
+    font-weight: 600;
+}
+
+.products-show-card .btn-light {
+    background: #fff;
+    color: var(--text-color);
+    border: 1px solid rgba(11,15,20,0.06);
+    box-shadow: 0 2px 6px rgba(11,15,20,0.04);
+}
+
+.products-show-card .btn-light:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+}
+
+/* Outline button */
+.products-show-card .btn-outline-secondary {
+    color: var(--text-color);
+    background: transparent;
+    border-radius: 999px;
+}
+
+/* Badges */
+.products-show-card .badge {
+    border-radius: 999px;
+    padding: .45rem .7rem;
+    font-weight: 700;
+}
+
+.products-show-card .badge.bg-success {
+    background: var(--success-soft);
+    color: var(--success-text);
+    box-shadow: none;
+    border: 1px solid rgba(31,138,68,0.06);
+}
+
+.products-show-card .badge.bg-secondary {
+    background: var(--inactive-soft);
+    color: #6b6f74;
+    border: 1px solid rgba(11,15,20,0.03);
+}
+
+/* Section cards inside page */
+.products-show-card .card + .card {
+    margin-top: 1rem;
+}
+
+/* Card headers inside sections */
+.products-show-card .card .card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(11,15,20,0.04);
+    padding: .8rem 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Card bodies (sections) */
+.products-show-card .card .card-body {
+    background: #fff;
+    padding: 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(11,15,20,0.04);
+    text-align: justify;
+    color: var(--text-color);
+}
+
+/* Small separator under section titles */
+.products-show-card .section-sep {
+    height: 1px;
+    background: rgba(11,15,20,0.06);
+    margin: .6rem 0 1rem;
+}
+
+/* Timeline modernization */
+.timeline {
+    position: relative;
+    padding-left: 1.25rem;
+    margin: 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--timeline-line);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(11,15,20,0.08);
+    transform: translateX(-2px);
+}
+
+.timeline-marker.blue { background: var(--accent); }
+.timeline-marker.green { background: #28a745; }
+
+.timeline-content {
+    margin-left: 28px;
+    background: #fff;
+    padding: .8rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(11,15,20,0.04);
+}
+
+/* Toast container */
+.toast-container { z-index: 1200; }
+
+/* Animations */
+@keyframes cardFadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Utility tweaks */
+.products-show-card .small { color: var(--muted); }
+.products-show-card .h3, .products-show-card .h5 { color: var(--text-color); }
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .products-show-card { margin: 1rem; }
+    .products-show-card .card-body { padding: 1rem; }
+    .products-show-card .avatar { width: 72px; height: 72px; }
+    .timeline::before { left: 6px; }
+    .timeline-content { margin-left: 26px; padding: .7rem; }
+    .products-show-card h2 { text-align: center; }
+    .products-show-card .card .card-body { text-align: center; }
+    .products-show-card .timeline-content { text-align: left; }
+}
+
+/* Hover focus subtle transitions for links in content */
+.products-show-card a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color .14s ease;
+}
+.products-show-card a:hover {
+    text-decoration: underline;
+}
+
+/* Ensure horizontal alignment of header badges & timestamp */
+.products-show-card .d-flex.align-items-center { gap: .5rem; }
 </style>
 @endpush
 

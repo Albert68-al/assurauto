@@ -19,6 +19,7 @@ class Produit extends Model
         'description',
         'couverture',
         'tarif_base',
+        'duree',
         'taux',
         'tva',
         'devise',
@@ -48,6 +49,7 @@ class Produit extends Model
         'taux' => 0,
         'tva' => 0,
         'devise' => 'USD',
+        'duree' => '12',
     ];
 
     /**

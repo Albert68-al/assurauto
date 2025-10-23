@@ -57,6 +57,7 @@ class ProduitController extends Controller
             'description' => 'nullable|string',
             'couverture' => 'required|string',
             'tarif_base' => 'required|numeric|min:0',
+            'duree' => 'nullable|in:3,6,12',
             'taux' => 'nullable|numeric|min:0|max:100',
             'tva' => 'nullable|numeric|min:0|max:100',
             'devise' => 'required|string|size:3',
@@ -96,7 +97,7 @@ class ProduitController extends Controller
      */
     public function edit(Produit $produit)
     {
-        $pays = Pays::actif()->get();
+        $pays = Pays::where('actif', true)->get();
         $devises = $this->getDevisesDisponibles();
         
         return view('produits.edit', compact('produit', 'pays', 'devises'));
@@ -116,6 +117,7 @@ class ProduitController extends Controller
             'description' => 'nullable|string',
             'couverture' => 'required|string',
             'tarif_base' => 'required|numeric|min:0',
+            'duree' => 'nullable|in:3,6,12',
             'taux' => 'nullable|numeric|min:0|max:100',
             'tva' => 'nullable|numeric|min:0|max:100',
             'devise' => 'required|string|size:3',

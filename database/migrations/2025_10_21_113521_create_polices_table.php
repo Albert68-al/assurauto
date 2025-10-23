@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('polices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicule_id')->constrained()->onDelete('cascade');
+            $table->foreignId('produit_id')->constrained()->onDelete('cascade');
             $table->string('numero_police')->unique();
             $table->date('date_debut');
             $table->date('date_fin');

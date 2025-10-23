@@ -36,11 +36,13 @@
 
                     <div class="vehicule-actions">
                         <a href="{{ route('client.vehicules.edit', $vehicule) }}" class="btn btn-primary">Modifier</a>
-                        <form action="{{ route('client.vehicules.destroy', $vehicule) }}" method="POST" onsubmit="return confirm('Supprimer ce véhicule ?')">
+                        <form action="{{ route('client.vehicules.destroy', $vehicule) }}" method="POST"
+                            onsubmit="return confirm('Supprimer ce véhicule ?\n⚠️ Toutes les polices d’assurance liées seront également supprimées.')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>
                         </form>
+
                     </div>
                 </div>
             @empty

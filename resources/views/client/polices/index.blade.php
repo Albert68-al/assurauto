@@ -35,11 +35,15 @@
                     <td>{{ $police->statut }}</td>
                     <td>
                         @if($police->statut === 'En attente')
-                            <a href="{{ route('client.polices.edit', $police) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ route('client.polices.edit', $police) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
                             <form action="{{ route('client.polices.destroy', $police) }}" method="POST" class="d-inline" onsubmit="return confirm('Supprimer cette police ?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </form>
                         @endif
                     </td>

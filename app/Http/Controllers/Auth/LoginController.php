@@ -11,8 +11,6 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
-
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -20,7 +18,14 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // Désactiver temporairement la vérification d'email
-        return redirect()->intended($this->redirectPath());
+        if($user->isSuperAdmin()){
+            return redirect()->route('dashboard');
+        } 
+        elseif($user->isAdmin()){
+            return redirect()->route('dashboard');
+        }
+        else{
+            return redirect()->route('client.dashboard.index');
+        }
     }
 }

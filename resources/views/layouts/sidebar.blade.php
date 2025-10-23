@@ -20,7 +20,7 @@
             <i class="fas fa-car-crash"></i>
             <span>Sinistres</span>
         </a>
-        <a href="{{ route('paiements.index') }}" class="nav-item {{ request()->routeIs('paiements.*') ? 'active' : '' }}" data-module="paiements">
+        <a href="{{ route('wallets.index') }}" class="nav-item {{ request()->routeIs('wallets.*') ? 'active' : '' }}" data-module="paiements">
             <i class="fas fa-credit-card"></i>
             <span>Paiements</span>
         </a>

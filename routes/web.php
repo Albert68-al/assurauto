@@ -20,6 +20,7 @@ use App\Http\Controllers\Client\WalletController;
 use App\Http\Controllers\Client\SinistreController;
 use App\Http\Controllers\Client\VehiculeController;
 
+use App\Http\Controllers\Admin\AccountController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -66,8 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/clientdashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('vehicules', VehiculeController::class);
         Route::resource('/polices', PoliceController::class);
-        Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/wallets', [WalletController::class, 'index'])->name('wallet.index');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/my-wallet', [WalletController::class, 'transactions'])->name('wallet-transaction');
         Route::get('/sinistres', [SinistreController::class, 'index'])->name('sinistre.index');
     });
 
@@ -104,6 +106,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
     });
 
+    Route::prefix('admin')->group(function () {
+        Route::get('/wallets', [AccountController::class, 'index'])->name('wallets.index');
+        Route::post('/wallets', [AccountController::class, 'store'])->name('wallets.store');
+        Route::get('/wallets/deposit', [AccountController::class, 'depositForm'])->name('wallets.deposit.form');
+        Route::post('/wallets/deposit', [AccountController::class, 'deposit'])->name('wallets.deposit');
+    });
+    
     // Routes spécifiques aux rôles
     Route::middleware('role:agent')->group(function () {
         // Routes pour les agents d'assurance

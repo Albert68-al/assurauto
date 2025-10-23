@@ -44,14 +44,13 @@ class PoliceController extends Controller
             ->firstOrFail();
 
         $existingPolice = Police::where('vehicule_id', $vehicule->id)
-            ->where('status', '!=', 'Expiré')
-            ->where('date_fin', '>=', now())
+            ->whereIn('statut', ['En attente', 'Active'])
             ->first();
 
         if($existingPolice)
         {
             return back()->withErrors([
-                'vehicule_id' => 'Ce véhicule a déjà une police active ou en attente.'
+                'vehicule_id' => 'Ce véhicule a déjà une police en attente ou active. Vous ne pouvez pas en créer une nouvelle tant qu\'elle n\'est pas expirée.'
             ])->withInput();
         }
 

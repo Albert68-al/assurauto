@@ -28,31 +28,23 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Numéro Police</label>
-                    <input type="text" name="numero_police" class="form-control" value="{{ old('numero_police') }}" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Date Début</label>
-                    <input type="date" name="date_debut" class="form-control" value="{{ old('date_debut') }}" required>
-                </div>
-                <div class="form-group">
-                    <label>Date Fin</label>
-                    <input type="date" name="date_fin" class="form-control" value="{{ old('date_fin') }}" required>
+                    <label for="produit_id" class="form-label">Produit</label>
+                    <select name="produit_id" class="form-control" required>
+                        <option value="">-- Sélectionner --</option>
+                        @foreach($produits as $produit)
+                            <option value="{{ $produit->id }}" {{ old('produit_id') == $produit->id ? 'selected' : '' }}>
+                                {{ $produit->nom }} : {{ $produit->tarif_base }} | {{ $produit->duree }} Mois
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Montant Prime</label>
-                <input type="number" step="0.01" name="montant_prime" class="form-control" value="{{ old('montant_prime') }}" required>
+                <label>Numéro Police</label>
+                <input type="text" name="numero_police" class="form-control" value="{{ old('numero_police') }}" required>
             </div>
-
-            <div class="form-group">
-                <label>Garanties</label>
-                <textarea name="garanties" class="form-control" name="{{ old('garanties', $police->garanties ?? '') }}"></textarea>
-            </div>
+            
             <div class="form-actions">
                 <a href="{{ route('client.polices.index') }}" class="btn btn-secondary">Annuler</a>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>

@@ -61,7 +61,7 @@
             <i class="fas fa-money-bill-wave"></i>
         </div>
         <div class="stat-info">
-            <div class="stat-value" id="statRevenue">{{ number_format($stats['revenue'] ?? 0, 2, ',', ' ') }} €</div>
+            <div class="stat-value" id="statRevenue">{{ number_format($stats['revenue'] ?? 0, 2, ',', ' ') }} BIF</div>
             <div class="stat-label">Chiffre d'affaires</div>
         </div>
         <div class="stat-trend up">

@@ -13,11 +13,9 @@ return new class extends Migration
             $table->foreignId('vehicule_id')->constrained()->onDelete('cascade');
             $table->foreignId('produit_id')->constrained()->onDelete('cascade');
             $table->string('numero_police')->unique();
-            $table->date('date_debut');
-            $table->date('date_fin');
-            $table->decimal('montant_prime', 12, 2);
+            $table->date('date_debut')->nullable();;
+            $table->date('date_fin')->nullable();;
             $table->string('statut');
-            $table->text('garanties')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

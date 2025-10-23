@@ -12,7 +12,7 @@
             <i class="fas fa-file-contract"></i>
             <span>Produits</span>
         </a>
-        <a href="{{ route('client.polices.index') }}" class="nav-item {{ request()->routeIs('client.polices.*') ? 'active' : '' }}" data-module="polices">
+        <a href="{{ route('admin.polices.index') }}" class="nav-item {{ request()->routeIs('admin.polices.*') ? 'active' : '' }}" data-module="polices">
             <i class="fas fa-file-contract"></i>
             <span>Polices</span>
         </a>

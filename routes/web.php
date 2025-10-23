@@ -21,6 +21,7 @@ use App\Http\Controllers\Client\SinistreController;
 use App\Http\Controllers\Client\VehiculeController;
 
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\AssuranceController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -114,7 +115,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/wallets/deposit', [AccountController::class, 'depositForm'])->name('wallets.deposit.form');
         Route::post('/wallets/deposit', [AccountController::class, 'deposit'])->name('wallets.deposit');
     });
-    
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/polices', [AssuranceController::class, 'index'])->name('polices.index');
+        Route::post('/polices/{id}/approve', [AssuranceController::class, 'approve'])->name('polices.approve');
+    });
     // Routes spécifiques aux rôles
     Route::middleware('role:agent')->group(function () {
         // Routes pour les agents d'assurance

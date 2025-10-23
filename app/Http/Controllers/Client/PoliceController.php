@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Police;
 use App\Models\Vehicule;
+use App\Models\Produit;
 use Illuminate\Support\Facades\Auth;
 
 class PoliceController extends Controller
@@ -25,18 +26,16 @@ class PoliceController extends Controller
     public function create()
     {
         $vehicules = Vehicule::where('user_id', Auth::id())->get();
-        return view('client.polices.create', compact('vehicules'));
+        $produits = Produit::all();
+        return view('client.polices.create', compact('vehicules', 'produits'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'vehicule_id' => 'required|exists:vehicules,id',
+            'produit_id' => 'required|exists:produits,id',
             'numero_police' => 'required|unique:polices',
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
-            'montant_prime' => 'required|numeric',
-            'garanties' => 'required',
         ]);
 
         $vehicule = Vehicule::where('id', $request->vehicule_id)

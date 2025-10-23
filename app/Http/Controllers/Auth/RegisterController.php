@@ -13,8 +13,6 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/home';
-
     public function __construct()
     {
         $this->middleware('guest');
@@ -48,5 +46,11 @@ class RegisterController extends Controller
             'city' => $data['city'],
             'postal_code' => $data['postal_code'],
         ]);
+    }
+
+    protected function redirectTo()
+    {
+        // Always redirect new users to the client dashboard
+        return route('client.dashboard.index');
     }
 }

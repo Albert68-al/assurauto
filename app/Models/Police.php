@@ -14,6 +14,7 @@ class Police extends Model
     // Allow mass assignment for these fields
     protected $fillable = [
         'vehicule_id',
+        'produit_id',
         'numero_police',
         'date_debut',
         'date_fin',
@@ -21,6 +22,12 @@ class Police extends Model
         'statut',
         'garanties',
     ];
+
+    protected $casts = [
+        'date_debut' => 'datetime',
+        'date_fin'   => 'datetime',
+    ];
+
 
     /**
      * Relationship: A police belongs to a vehicle

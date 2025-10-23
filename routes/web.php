@@ -83,6 +83,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Routes for regional rules
         Route::get('/rules', [ComesaController::class, 'getRules'])->name('rules.get');
         Route::post('/rules', [ComesaController::class, 'saveRules'])->name('rules.save');
+        // Endpoint to add a new country locally (no external API)
+        Route::post('/pays', [ComesaController::class, 'storePays'])->name('pays.store');
     });
 
     // Administration

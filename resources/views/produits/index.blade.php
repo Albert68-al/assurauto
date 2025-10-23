@@ -97,6 +97,7 @@
                                         <th class="ps-4" style="width: 50px;">#</th>
                                         <th>Produit</th>
                                         <th>Pays</th>
+                                        <th>Durée</th>
                                         <th class="text-center">Statut</th>
                                         <th class="text-end pe-4" style="width: 200px;">Actions</th>
                                     </tr>
@@ -125,6 +126,9 @@
                                                     <i class="fas fa-flag me-1 text-primary"></i> 
                                                     {{ $produit->pays->nom ?? 'N/A' }}
                                                 </span>
+                                            </td>
+                                            <td>
+                                                {{ $produit->duree ?? '-' }}
                                             </td>
                                             <td class="text-center">
                                                 @if($produit->actif)

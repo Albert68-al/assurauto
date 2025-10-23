@@ -86,6 +86,18 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="duree" class="form-label fw-medium">Durée</label>
+                                            <select id="duree" name="duree" class="form-select @error('duree') is-invalid @enderror">
+                                                <option value="3" {{ old('duree') == '3' ? 'selected' : '' }}>3 mois</option>
+                                                <option value="6" {{ old('duree') == '6' ? 'selected' : '' }}>6 mois</option>
+                                                <option value="12" {{ old('duree', '12') == '12' ? 'selected' : '' }}>1 an</option>
+                                            </select>
+                                            <div class="form-text">Choisissez la durée de la couverture.</div>
+                                            @error('duree')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         
                                         <div class="mb-3">
                                             <label for="taux" class="form-label fw-medium">Taux spécifique (%)</label>
@@ -633,6 +645,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const deviseSelect = document.getElementById('devise');
     const deviseSymbole = document.getElementById('devise-symbole');
     const tarifBaseInput = document.getElementById('tarif_base');
+    const dureeSelect = document.getElementById('duree');
     const tauxInput = document.getElementById('taux');
     const tvaInput = document.getElementById('tva');
     const tarifTtcElement = document.getElementById('tarif-ttc');
@@ -655,18 +668,23 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTarifTTC();
     }
 
-    // Calculer le tarif TTC
+    // Calculer le tarif TTC (appliqué proportionnellement selon la durée choisie)
     function updateTarifTTC() {
         const tarifBase = parseFloat(tarifBaseInput.value) || 0;
         const taux = parseFloat(tauxInput.value) || 0;
         const tva = parseFloat(tvaInput.value) || 0;
-        
+        const duree = parseInt(dureeSelect ? dureeSelect.value : 12) || 12; // months
+        const durationFactor = duree / 12; // proportion of a year (e.g., 3 -> 0.25)
+
         // Calcul du montant avec taux
         const montantAvecTaux = tarifBase * (1 + (taux / 100));
-        
+
+        // Appliquer la durée (proportionnelle à l'année)
+        const montantPourLaDuree = montantAvecTaux * durationFactor;
+
         // Calcul du montant TTC
-        const montantTTC = montantAvecTaux * (1 + (tva / 100));
-        
+        const montantTTC = montantPourLaDuree * (1 + (tva / 100));
+
         // Mise à jour de l'affichage
         if (tarifBase > 0) {
             tarifTtcElement.textContent = `${montantTTC.toFixed(2)} ${deviseSymbole.textContent}`;
@@ -711,6 +729,10 @@ document.addEventListener('DOMContentLoaded', function() {
     [tarifBaseInput, tauxInput, tvaInput].forEach(input => {
         input.addEventListener('input', updateTarifTTC);
     });
+
+    if (dureeSelect) {
+        dureeSelect.addEventListener('change', updateTarifTTC);
+    }
 
     paysSelect.addEventListener('change', function() {
         fetchPaysInfo(this.value);

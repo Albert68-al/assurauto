@@ -6,7 +6,6 @@ use App\Http\Controllers\{
     ProduitController,
     PaiementController,
     ComesaController,
-    UserController,
     SettingController,
     NotificationTemplateController,
     BackupController,
@@ -19,7 +18,8 @@ use App\Http\Controllers\Client\PoliceController;
 use App\Http\Controllers\Client\WalletController;
 use App\Http\Controllers\Client\SinistreController;
 use App\Http\Controllers\Client\VehiculeController;
-
+use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AssuranceController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -93,7 +93,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Administration
     Route::prefix('admin')->name('admin.')->middleware('role:super_admin|admin')->group(function () {
         // Gestion des utilisateurs
-        Route::resource('users', UserController::class)->except(['show']);
+        Route::resource('users', UserController::class);
+        Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
         
         // Rôles et permissions
         Route::resource('roles', RoleController::class)->except(['show']);
@@ -107,6 +108,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('backups', [BackupController::class, 'index'])->name('backups.index');
         Route::post('backups/create', [BackupController::class, 'create'])->name('backups.create');
         Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
+        
+        // Journalisation des activités
+        Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+        Route::delete('activity-logs/{activityLog}', [ActivityLogController::class, 'destroy'])->name('activity-logs.destroy');
+        Route::post('activity-logs/clear', [ActivityLogController::class, 'clear'])->name('activity-logs.clear');
     });
 
     Route::prefix('admin')->group(function () {

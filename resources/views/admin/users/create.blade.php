@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Modifier un Utilisateur')
+@section('title', 'Créer un Utilisateur')
 
 @section('content')
 <div class="container-fluid">
     <!-- En-tête -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-user-edit"></i> Modifier l'utilisateur : {{ $user->name }}
+            <i class="fas fa-user-plus"></i> Créer un Utilisateur
         </h1>
         <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Retour à la liste
@@ -22,9 +22,8 @@
                     <h6 class="m-0 font-weight-bold text-primary">Informations de l'utilisateur</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.users.update', $user) }}">
+                    <form method="POST" action="{{ route('admin.users.store') }}">
                         @csrf
-                        @method('PUT')
 
                         <!-- Nom -->
                         <div class="form-group">
@@ -33,8 +32,9 @@
                                    class="form-control @error('name') is-invalid @enderror" 
                                    id="name" 
                                    name="name" 
-                                   value="{{ old('name', $user->name) }}" 
-                                   required>
+                                   value="{{ old('name') }}" 
+                                   required 
+                                   autofocus>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -47,7 +47,7 @@
                                    class="form-control @error('email') is-invalid @enderror" 
                                    id="email" 
                                    name="email" 
-                                   value="{{ old('email', $user->email) }}" 
+                                   value="{{ old('email') }}" 
                                    required>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -61,7 +61,7 @@
                                    class="form-control @error('phone') is-invalid @enderror" 
                                    id="phone" 
                                    name="phone" 
-                                   value="{{ old('phone', $user->phone) }}" 
+                                   value="{{ old('phone') }}" 
                                    required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -77,8 +77,7 @@
                                     required>
                                 <option value="">Sélectionner un rôle</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->name }}" 
-                                            {{ old('role', $user->roles->first()->name ?? '') == $role->name ? 'selected' : '' }}>
+                                    <option value="{{ $role->name }}" {{ old('role') == $role->name ? 'selected' : '' }}>
                                         {{ ucfirst($role->name) }}
                                     </option>
                                 @endforeach
@@ -88,39 +87,29 @@
                             @enderror
                         </div>
 
-                        <hr class="my-4">
-
-                        <h6 class="font-weight-bold text-primary mb-3">
-                            <i class="fas fa-key"></i> Changer le mot de passe (optionnel)
-                        </h6>
-
                         <!-- Mot de passe -->
                         <div class="form-group">
-                            <label for="password" class="form-label">Nouveau mot de passe</label>
+                            <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
                             <input type="password" 
                                    class="form-control @error('password') is-invalid @enderror" 
                                    id="password" 
-                                   name="password">
+                                   name="password" 
+                                   required>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <small class="form-text text-muted">Laissez vide pour conserver le mot de passe actuel</small>
+                            <small class="form-text text-muted">Minimum 8 caractères</small>
                         </div>
 
                         <!-- Confirmation mot de passe -->
                         <div class="form-group">
-                            <label for="password_confirmation" class="form-label">Confirmer le nouveau mot de passe</label>
+                            <label for="password_confirmation" class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
                             <input type="password" 
                                    class="form-control" 
                                    id="password_confirmation" 
-                                   name="password_confirmation">
+                                   name="password_confirmation" 
+                                   required>
                         </div>
-
-                        <hr class="my-4">
-
-                        <h6 class="font-weight-bold text-primary mb-3">
-                            <i class="fas fa-map-marker-alt"></i> Informations complémentaires
-                        </h6>
 
                         <!-- Adresse -->
                         <div class="form-group">
@@ -128,7 +117,7 @@
                             <textarea class="form-control @error('address') is-invalid @enderror" 
                                       id="address" 
                                       name="address" 
-                                      rows="2">{{ old('address', $user->address) }}</textarea>
+                                      rows="2">{{ old('address') }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -143,7 +132,7 @@
                                            class="form-control @error('city') is-invalid @enderror" 
                                            id="city" 
                                            name="city" 
-                                           value="{{ old('city', $user->city) }}">
+                                           value="{{ old('city') }}">
                                     @error('city')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -158,7 +147,7 @@
                                            class="form-control @error('postal_code') is-invalid @enderror" 
                                            id="postal_code" 
                                            name="postal_code" 
-                                           value="{{ old('postal_code', $user->postal_code) }}">
+                                           value="{{ old('postal_code') }}">
                                     @error('postal_code')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -169,7 +158,7 @@
                         <!-- Boutons -->
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Enregistrer les modifications
+                                <i class="fas fa-save"></i> Créer l'utilisateur
                             </button>
                             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-times"></i> Annuler
@@ -180,51 +169,50 @@
             </div>
         </div>
 
-        <!-- Informations -->
+        <!-- Aide -->
         <div class="col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-info">
-                        <i class="fas fa-info-circle"></i> Informations
+                        <i class="fas fa-info-circle"></i> Aide
                     </h6>
                 </div>
                 <div class="card-body">
-                    <p class="mb-2">
-                        <strong>ID:</strong> {{ $user->id }}
-                    </p>
-                    <p class="mb-2">
-                        <strong>Statut:</strong> 
-                        @if($user->email_verified_at)
-                            <span class="badge badge-success">Actif</span>
-                        @else
-                            <span class="badge badge-secondary">Inactif</span>
-                        @endif
-                    </p>
-                    <p class="mb-2">
-                        <strong>Créé le:</strong> {{ $user->created_at->format('d/m/Y H:i') }}
-                    </p>
-                    <p class="mb-2">
-                        <strong>Dernière modification:</strong> {{ $user->updated_at->format('d/m/Y H:i') }}
-                    </p>
+                    <h6 class="font-weight-bold">Rôles disponibles :</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <span class="badge badge-danger">Super Admin</span>
+                            <small class="d-block text-muted">Accès complet au système</small>
+                        </li>
+                        <li class="mb-2">
+                            <span class="badge badge-warning">Admin</span>
+                            <small class="d-block text-muted">Gestion administrative</small>
+                        </li>
+                        <li class="mb-2">
+                            <span class="badge badge-info">Agent</span>
+                            <small class="d-block text-muted">Agent d'assurance</small>
+                        </li>
+                        <li class="mb-2">
+                            <span class="badge badge-success">Client</span>
+                            <small class="d-block text-muted">Utilisateur client</small>
+                        </li>
+                        <li class="mb-2">
+                            <span class="badge badge-primary">Expert</span>
+                            <small class="d-block text-muted">Expert en sinistres</small>
+                        </li>
+                        <li class="mb-2">
+                            <span class="badge badge-secondary">Comptable</span>
+                            <small class="d-block text-muted">Gestion comptable</small>
+                        </li>
+                    </ul>
 
                     <hr>
 
-                    <div class="d-grid gap-2">
-                        <a href="{{ route('admin.users.show', $user) }}" class="btn btn-info btn-block">
-                            <i class="fas fa-eye"></i> Voir le profil complet
-                        </a>
-                        
-                        @if($user->id !== auth()->id())
-                            <form action="{{ route('admin.users.toggle-status', $user) }}" method="POST">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="btn btn-{{ $user->email_verified_at ? 'warning' : 'success' }} btn-block">
-                                    <i class="fas fa-{{ $user->email_verified_at ? 'ban' : 'check' }}"></i>
-                                    {{ $user->email_verified_at ? 'Désactiver' : 'Activer' }} l'utilisateur
-                                </button>
-                            </form>
-                        @endif
-                    </div>
+                    <h6 class="font-weight-bold mt-3">Sécurité :</h6>
+                    <p class="small text-muted">
+                        Le mot de passe doit contenir au minimum 8 caractères. 
+                        L'utilisateur recevra un email de vérification après la création.
+                    </p>
                 </div>
             </div>
         </div>

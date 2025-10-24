@@ -4,7 +4,7 @@
             <i class="fas fa-chart-line"></i>
             <span>Tableau de bord</span>
         </a>
-        <a href="{{ route('client.dashboard.index') }}" class="nav-item {{ request()->routeIs('client.dashboard.*') ? 'active' : '' }}" data-module="clients">
+        <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('client.dashboard.*') ? 'active' : '' }}" data-module="clients">
             <i class="fas fa-users"></i>
             <span>Clients</span>
         </a>

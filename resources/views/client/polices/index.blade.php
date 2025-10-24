@@ -17,8 +17,6 @@
                     <th>Véhicule</th>
                     <th>Date Début</th>
                     <th>Date Fin</th>
-                    <th>Montant</th>
-                    <th>Garanties</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -30,8 +28,6 @@
                     <td>{{ $police->vehicule->immatriculation ?? 'N/A' }}</td>
                     <td>{{ $police->date_debut }}</td>
                     <td>{{ $police->date_fin }}</td>
-                    <td>{{ $police->montant_prime }}</td>
-                    <td>{{ $police->garanties }}</td>
                     <td>{{ $police->statut }}</td>
                     <td>
                         @if($police->statut === 'En attente')

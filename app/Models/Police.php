@@ -36,4 +36,8 @@ class Police extends Model
     {
         return $this->belongsTo(Vehicule::class);
     }
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class);
+    }
 }

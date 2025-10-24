@@ -24,7 +24,7 @@
                         <option value="">-- Choose Wallet --</option>
                         @foreach ($wallets as $wallet)
                             <option value="{{ $wallet->id }}">
-                                {{ $wallet->user->name }} — ₺{{ number_format($wallet->solde, 2) }}
+                                {{ $wallet->user->name }} — $ {{ number_format($wallet->solde, 2) }}
                             </option>
                         @endforeach
                     </select>

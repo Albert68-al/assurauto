@@ -46,7 +46,7 @@
                             <tr>
                                 <th>User</th>
                                 <th>Email</th>
-                                <th class="text-right">Balance (Fbu)</th>
+                                <th class="text-right">Balance ($)</th>
                                 <th class="text-center">Last Updated</th>
                             </tr>
                         </thead>

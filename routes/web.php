@@ -34,7 +34,7 @@ Auth::routes(['verify' => true]);
 // Surcharge de la route de connexion
 Route::post('/login', 'App\Http\Controllers\Auth\CustomLoginController@login')
     ->middleware(['throttle:5,1'])
-    ->name('login');
+    ->name('custom.login');
 
 // Routes de vérification d'email
 Route::middleware('auth')->group(function () {
@@ -132,11 +132,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:comptable')->group(function () {
         // Routes pour les comptables
     });
-});
-
-// Routes API
-Route::prefix('api')->middleware('auth:sanctum')->group(function () {
-    // Vos routes API ici
 });
 
 // Gestion des erreurs 404

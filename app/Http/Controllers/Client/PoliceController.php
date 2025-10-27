@@ -9,6 +9,7 @@ use App\Models\Police;
 use App\Models\Vehicule;
 use App\Models\Produit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PoliceController extends Controller
 {
@@ -38,27 +39,58 @@ class PoliceController extends Controller
             'numero_police' => 'required|unique:polices',
         ]);
 
+        $user = Auth::user();
+
         $vehicule = Vehicule::where('id', $request->vehicule_id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->firstOrFail();
 
         $existingPolice = Police::where('vehicule_id', $vehicule->id)
             ->whereIn('statut', ['En attente', 'Active'])
             ->first();
 
-        if($existingPolice)
-        {
+        if($existingPolice) {
             return back()->withErrors([
-                'vehicule_id' => 'Ce véhicule a déjà une police en attente ou active. Vous ne pouvez pas en créer une nouvelle tant qu\'elle n\'est pas expirée.'
+                'vehicule_id' => 'Ce véhicule a déjà une police en attente ou active.'
             ])->withInput();
         }
 
-        $police = Police::create(array_merge(
-            $request->all(),
-            ['statut' => 'En attente']
-        ));
+        $produit = Produit::findOrFail($request->produit_id);
 
-        return redirect()->route('client.polices.index')->with('success', 'Police créée avec succès');
+        if (!$user->wallet) {
+            return back()->withErrors([
+                'wallet' => 'Vous n\'avez pas de portefeuille.'
+            ])->withInput();
+        }
+
+        $tarif = (float) $produit->tarif_base;
+        $solde = (float) $user->wallet->solde;
+
+        if ($solde < $tarif) {
+            return back()->withErrors([
+                'wallet' => 'Solde insuffisant dans votre portefeuille.'
+            ])->withInput();
+        }
+
+        // Deduct and create police in a transaction
+        DB::transaction(function() use ($user, $request, $tarif) {
+            $user->wallet->solde -= $tarif;
+            $user->wallet->save();
+
+            $user->wallet->transactions()->create([
+                'amount' => -$tarif,
+                'type' => 'credit',
+                'description' => "Paiement de l'assurance : " . $request->numero_police,
+            ]);
+
+            Police::create(array_merge(
+                $request->all(),
+                ['statut' => 'En attente']
+            ));
+        });
+
+        return redirect()->route('client.polices.index')
+            ->with('success', 'Police créée avec succès et paiement effectué depuis votre portefeuille.');
     }
 
 

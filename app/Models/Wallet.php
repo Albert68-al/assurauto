@@ -14,6 +14,10 @@ class Wallet extends Model
         'solde',
     ];
 
+    protected $casts = [
+        'solde' => 'float',
+    ];
+
     // Relationship: A wallet belongs to a user
     public function user()
     {

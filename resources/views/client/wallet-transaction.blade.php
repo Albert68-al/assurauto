@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="wallet-page">
+@if ($wallet)
     <div class="wallet-header">
         <div>
             <h2><span class="icon">💳</span> Mon Portefeuille</h2>
@@ -12,7 +13,7 @@
     <div class="wallet-summary">
         <div class="summary-card">
             <h4>Solde Actuel</h4>
-            <p class="balance">{{ number_format($wallet->solde ?? 0, 2) }} Fbu</p>
+            <p class="balance">$ {{ number_format($wallet->solde ?? 0, 2) }}</p>
         </div>
     </div>
 
@@ -25,7 +26,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Type</th>
-                            <th>Solde (Fbu)</th>
+                            <th>Solde ($)</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -36,6 +37,8 @@
                                 <td>
                                     @if ($transaction->type === 'debit')
                                         <span class="badge success">Dépôt</span>
+                                    @else ($transaction->type === 'credit')
+                                        <span class="badge success">Retrait</span>
                                     @endif
                                 </td>
                                 <td class="{{ $transaction->type === 'deposit' ? 'text-green' : 'text-red' }}">
@@ -51,6 +54,12 @@
             @endif
         </div>
     </div>
+@else
+<div class="no-wallet text-center">
+    <h3>😕 Vous n’avez pas encore de portefeuille.</h3>
+    <p>Rendez-vous auprès de l’administration pour créer votre portefeuille.</p>
+</div>
+@endif
 </div>
 @endsection
 

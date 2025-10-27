@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
     ProduitController,
-    PaiementController,
+    PaymentController,
     ComesaController,
+    UserController,
     SettingController,
     NotificationTemplateController,
     BackupController,
@@ -18,10 +19,7 @@ use App\Http\Controllers\Client\PoliceController;
 use App\Http\Controllers\Client\WalletController;
 use App\Http\Controllers\Client\SinistreController;
 use App\Http\Controllers\Client\VehiculeController;
-use App\Http\Controllers\Admin\ActivityLogController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\AssuranceController;
+
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -61,16 +59,50 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Ressources communes
     Route::resources([
         'produits' => ProduitController::class,
-        'paiements' => PaiementController::class,
+        // 'paiements' => PaymentController::class,
     ]);
+
+//     // Routes pour les paiements
+// Route::prefix('payments')->name('payments.')->group(function () {
+//     // Liste des paiements
+//     Route::get('/', [PaymentController::class, 'index'])->name('index');
+    
+//     // Création de paiement
+//     Route::get('/create', [PaymentController::class, 'create'])->name('create');
+//     Route::post('/', [PaymentController::class, 'store'])->name('store');
+    
+//     // Visualisation et édition
+//     Route::get('/{payment}', [PaymentController::class, 'show'])->name('show');
+//     Route::get('/{payment}/edit', [PaymentController::class, 'edit'])->name('edit');
+//     Route::put('/{payment}', [PaymentController::class, 'update'])->name('update');
+//     Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('destroy');
+    
+//     // Exportation
+//     Route::get('/export/excel', [PaymentController::class, 'exportExcel'])->name('export.excel');
+//     Route::get('/export/pdf', [PaymentController::class, 'exportPdf'])->name('export.pdf');
+//     Route::get('/{payment}/invoice', [PaymentController::class, 'showInvoice'])->name('invoice');
+
+// // Export wallets (named route used by views)
+// Route::get('/export/wallets', [PaymentController::class, 'exportExcel'])->name('export.wallets');    
+//     // Gestion du statut
+//     Route::patch('/{payment}/status', [PaymentController::class, 'updateStatus'])->name('update-status');
+    
+    // Gestion des portefeuilles
+    Route::prefix('wallet')->name('wallet.')->group(function () {
+        Route::get('/', [PaymentController::class, 'walletIndex'])->name('index');
+        Route::get('/{user}', [PaymentController::class, 'walletShow'])->name('show');
+        Route::post('/', [PaymentController::class, 'walletAddFunds'])->name('store');
+        Route::post('/adjust', [PaymentController::class, 'walletAdjustBalance'])->name('adjust');
+        Route::get('/export/excel', [PaymentController::class, 'exportWalletsExcel'])->name('export.excel');
+    });
+});
 
     Route::prefix('client')->name('client.')->group(function () {
         Route::get('/clientdashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('vehicules', VehiculeController::class);
         Route::resource('/polices', PoliceController::class);
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('/my-wallet', [WalletController::class, 'transactions'])->name('wallet-transaction');
+        Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/wallets', [WalletController::class, 'index'])->name('wallet.index');
         Route::get('/sinistres', [SinistreController::class, 'index'])->name('sinistre.index');
     });
 
@@ -93,8 +125,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Administration
     Route::prefix('admin')->name('admin.')->middleware('role:super_admin|admin')->group(function () {
         // Gestion des utilisateurs
-        Route::resource('users', UserController::class);
-        Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+        Route::resource('users', UserController::class)->except(['show']);
         
         // Rôles et permissions
         Route::resource('roles', RoleController::class)->except(['show']);
@@ -108,24 +139,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('backups', [BackupController::class, 'index'])->name('backups.index');
         Route::post('backups/create', [BackupController::class, 'create'])->name('backups.create');
         Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
-        
-        // Journalisation des activités
-        Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
-        Route::delete('activity-logs/{activityLog}', [ActivityLogController::class, 'destroy'])->name('activity-logs.destroy');
-        Route::post('activity-logs/clear', [ActivityLogController::class, 'clear'])->name('activity-logs.clear');
     });
 
-    Route::prefix('admin')->group(function () {
-        Route::get('/wallets', [AccountController::class, 'index'])->name('wallets.index');
-        Route::post('/wallets', [AccountController::class, 'store'])->name('wallets.store');
-        Route::get('/wallets/deposit', [AccountController::class, 'depositForm'])->name('wallets.deposit.form');
-        Route::post('/wallets/deposit', [AccountController::class, 'deposit'])->name('wallets.deposit');
-    });
-
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/polices', [AssuranceController::class, 'index'])->name('polices.index');
-        Route::post('/polices/{id}/approve', [AssuranceController::class, 'approve'])->name('polices.approve');
-    });
     // Routes spécifiques aux rôles
     Route::middleware('role:agent')->group(function () {
         // Routes pour les agents d'assurance
@@ -138,7 +153,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:comptable')->group(function () {
         // Routes pour les comptables
     });
-});
+    // Modèles de notifications
+    Route::resource('notification-templates', NotificationTemplateController::class);   
 
 // Routes API
 Route::prefix('api')->middleware('auth:sanctum')->group(function () {

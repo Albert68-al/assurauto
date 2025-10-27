@@ -51,14 +51,15 @@
 </div>
 
 <div class="notif-card">
-    <h3 class="notif-subtitle">Produits disponibles</h3>
+    <h2 class="notif-title">🛡️ Produits disponibles</h2>
+    <h3 class="notif-subtitle">🛡️ Produits disponibles</h3>
 
     <div class="products-grid">
         @forelse($produits as $produit)
             <div class="product-card">
                 <div class="product-header">
                     <h4 class="product-name">{{ $produit->nom }}</h4>
-                    <span class="status-badge active">{{ number_format($produit->tarif_base, 2, ',', ' ') }} {{ $produit->devise }} / {{ $produit->duree ?? '-'}} Mois</span>
+                    <span class="status-badge active">{{ number_format($produit->tarif_base, 2, ',', ' ') }} {{ $produit->devise }}</span>
                 </div>
 
                 <p class="product-description">{{ $produit->description }}</p>

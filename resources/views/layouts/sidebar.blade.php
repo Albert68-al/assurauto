@@ -29,49 +29,47 @@
             <span>Module COMESA</span>
         </a>
         
-        @can('manage users')
+        @auth
+        @if(auth()->user()->hasRole(['super_admin', 'admin']))
         <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}" data-module="utilisateurs">
             <i class="fas fa-user-shield"></i>
             <span>Utilisateurs</span>
         </a>
-        @endcan
         
-        @can('manage settings')
-        @if(auth()->user()->isSuperAdmin())
-        <div class="nav-item has-submenu {{ request()->is('admin/settings*', 'admin/roles*', 'admin/permissions*', 'admin/backups*') ? 'active' : '' }}">
-            <a href="#" class="nav-link">
+        <div class="nav-item has-submenu {{ request()->is('admin/settings*', 'admin/roles*', 'admin/permissions*', 'admin/backups*', 'admin/activity-logs*') ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="nav-link" onclick="toggleSubmenu(this)">
                 <i class="fas fa-cogs"></i>
                 <span>Configuration Système</span>
                 <i class="fas fa-chevron-down"></i>
             </a>
             <ul class="submenu">
-                <li class="nav-item">
-                    <a href="{{ route('admin.settings.edit') }}" class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+                <li>
+                    <a href="{{ route('admin.settings.index') }}" class="submenu-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
                         <i class="fas fa-sliders-h"></i>
-                        <span>Paramètres</span>
+                        <span>Paramètres Généraux</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.roles.index') }}" class="nav-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
+                <li>
+                    <a href="{{ route('admin.roles.index') }}" class="submenu-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
                         <i class="fas fa-user-tag"></i>
-                        <span>Rôles</span>
+                        <span>Rôles & Permissions</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}">
-                        <i class="fas fa-key"></i>
-                        <span>Permissions</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.backups.index') }}" class="nav-link {{ request()->routeIs('admin.backups*') ? 'active' : '' }}">
+                <li>
+                    <a href="{{ route('admin.backups.index') }}" class="submenu-link {{ request()->routeIs('admin.backups*') ? 'active' : '' }}">
                         <i class="fas fa-database"></i>
                         <span>Sauvegardes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.activity-logs.index') }}" class="submenu-link {{ request()->routeIs('admin.activity-logs*') ? 'active' : '' }}">
+                        <i class="fas fa-history"></i>
+                        <span>Journaux d'Activité</span>
                     </a>
                 </li>
             </ul>
         </div>
         @endif
-        @endcan
+        @endauth
     </nav>
 </aside>

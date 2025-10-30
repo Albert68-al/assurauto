@@ -20,9 +20,11 @@
             <i class="fas fa-car-crash"></i>
             <span>Sinistres</span>
         </a>
-        <a href="{{ route('wallets.index') }}" class="nav-item {{ request()->routeIs('wallets.*') ? 'active' : '' }}" data-module="paiements">
-            <i class="fas fa-credit-card"></i>
-            <span>Paiements</span>
+        <a href="{{ route('admin.wallets.index') }}" class="nav-item {{ request()->routeIs('admin.wallets.*') ? 'active' : '' }}" data-module="paiements">
+    <i class="fas fa-credit-card"></i>
+    <span>Paiements</span>
+</a>
+
         </a>
         <a href="{{ route('comesa.index') }}" class="nav-item {{ request()->routeIs('comesa*') ? 'active' : '' }}" data-module="comesa">
             <i class="fas fa-globe-africa"></i>
@@ -44,19 +46,19 @@
             </a>
             <ul class="submenu">
                 <li>
-                    <a href="{{ route('admin.settings.index') }}" class="submenu-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
-                        <i class="fas fa-sliders-h"></i>
-                        <span>Paramètres Généraux</span>
-                    </a>
+                    <a href="{{ route('settings.index') }}">
+                              Paramètres Généraux
+                         </a>
+
                 </li>
                 <li>
-                    <a href="{{ route('admin.roles.index') }}" class="submenu-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
+                    <a href="{{ route('roles.index') }}" class="submenu-link {{ request()->routeIs('roles*') ? 'active' : '' }}">
                         <i class="fas fa-user-tag"></i>
                         <span>Rôles & Permissions</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.backups.index') }}" class="submenu-link {{ request()->routeIs('admin.backups*') ? 'active' : '' }}">
+                    <a href="{{ route('backups.index') }}" class="submenu-link {{ request()->routeIs('backups*') ? 'active' : '' }}">
                         <i class="fas fa-database"></i>
                         <span>Sauvegardes</span>
                     </a>

@@ -54,6 +54,7 @@
     <h2 class="notif-title">🛡️ Produits disponibles</h2>
     <h3 class="notif-subtitle">🛡️ Produits disponibles</h3>
 
+    
     <div class="products-grid">
         @forelse($produits as $produit)
             <div class="product-card">

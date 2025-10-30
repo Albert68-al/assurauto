@@ -8,7 +8,7 @@
             <h2><span class="icon">💼</span> Wallet Management</h2>
             <p class="subtitle">Manage users, create wallets, and view balances easily</p>
         </div>
-        <a href="{{ route('wallets.deposit.form') }}" class="btn btn-success btn-deposit">
+        <a href="{{ route('admin.wallets.depositForm') }}" class="btn btn-success btn-deposit">
             💰 Deposit Funds
         </a>
     </div>
@@ -19,7 +19,7 @@
         <div class="card wallet-card">
             <div class="card-header bg-primary">➕ Create Wallet for User</div>
             <div class="card-body">
-                <form action="{{ route('wallets.store') }}" method="POST" class="form">
+                <form action="{{ route('admin.wallets.store') }}" method="POST" class="form">
                     @csrf
                     <div class="form-group">
                         <label for="user_id">Select User</label>

@@ -8,7 +8,7 @@
             <h2><span class="icon">💰</span> Deposit to Wallet</h2>
             <p class="subtitle">Add funds securely to a user’s wallet</p>
         </div>
-        <a href="{{ route('wallets.index') }}" class="btn btn-secondary">
+        <a href="{{ route('admin.wallets.index') }}" class="btn btn-secondary">
             ⬅ Back to Wallets
         </a>
     </div>
@@ -16,7 +16,7 @@
     <div class="card wallet-card">
         <div class="card-header bg-success">💸 Deposit Form</div>
         <div class="card-body">
-            <form action="{{ route('wallets.deposit') }}" method="POST" class="form">
+            <form action="{{ route('admin.wallets.deposit') }}" method="POST" class="form">
                 @csrf
                 <div class="form-group">
                     <label for="wallet_id">Select Wallet</label>

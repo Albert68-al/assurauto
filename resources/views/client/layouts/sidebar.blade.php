@@ -16,11 +16,11 @@
             <i class="fas fa-clipboard-list"></i>
             <span>Sinistres</span>
         </a>
-        <a href="{{ route('client.wallet-transaction') }}" class="nav-item {{ request()->routeIs('wallet.*') ? 'active' : '' }}" data-module="wallets">
+        <a href="{{ route('client.wallet.index') }}" class="nav-item {{ request()->routeIs('client.wallet.*') ? 'active' : '' }}" data-module="wallets">
             <i class="fas fa-wallet"></i>
             <span>Portefeuille</span>
         </a>
-        <a href="{{ route('client.profile.edit') }}" class="nav-item {{ request()->routeIs('client.profile.*') ? 'active' : '' }}" data-module="profiles">
+        <a href="{{ route('client.profile.index') }}" class="nav-item {{ request()->routeIs('client.profile.*') ? 'active' : '' }}" data-module="profiles">
             <i class="fas fa-user-circle"></i>
             <span>Profile</span>
         </a>

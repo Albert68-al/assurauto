@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\ActivityLog;
+use App\Models\Contrat;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -194,20 +198,48 @@ class UserController extends Controller
         $userName = $user->name;
         $userEmail = $user->email;
 
-        // Journaliser avant la suppression
-        ActivityLog::create([
-            'user_id' => Auth::id(),
-            'action' => 'delete_user',
-            'description' => "Suppression de l'utilisateur {$userName} ({$userEmail})",
-            'subject_type' => User::class,
-            'subject_id' => $user->id,
-            'ip_address' => request()->ip(),
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $user->delete();
+            // Supprimer d'abord les contrats liés s'ils existent
+            if (Schema::hasTable('contrats')) {
+                $user->contrats()->delete();
+            }
 
-        return redirect()->route('admin.users.index')
-            ->with('success', 'Utilisateur supprimé avec succès.');
+            // Supprimer les autres relations si nécessaire
+            if ($user->vehicules()->exists()) {
+                $user->vehicules()->delete();
+            }
+
+            if ($user->wallet) {
+                $user->wallet()->delete();
+            }
+
+            // Supprimer l'utilisateur
+            $user->delete();
+
+            // Journaliser la suppression
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'delete_user',
+                'description' => "Suppression de l'utilisateur {$userName} ({$userEmail})",
+                'subject_type' => User::class,
+                'subject_id' => $user->id,
+                'ip_address' => request()->ip(),
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Utilisateur supprimé avec succès.');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            \Log::error('Erreur lors de la suppression de l\'utilisateur: ' . $e->getMessage());
+            
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Une erreur est survenue lors de la suppression de l\'utilisateur.');
+        }
     }
 
     /**

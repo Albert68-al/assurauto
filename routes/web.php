@@ -83,8 +83,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/clientdashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('vehicules', VehiculeController::class);
         Route::resource('/polices', PoliceController::class);
-        Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/wallets', [WalletController::class, 'index'])->name('wallet.index');
+        Route::get('/profiles', [ProfileController::class, 'edit'])->name('profile.index');
+        Route::put('/profiles', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/wallets', [WalletController::class, 'transactions'])->name('wallet.index');
         Route::get('/sinistres', [SinistreController::class, 'index'])->name('sinistre.index');
     });
 
@@ -109,7 +110,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('users', UserController::class);
 
     // Toggle status
-    Route::post('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::match(['post', 'patch'], 'users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
 });
 
 

@@ -108,9 +108,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Administration
     Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:super_admin|admin'])->group(function () {
     Route::resource('users', UserController::class);
+    Route::resource('polices', PoliceController::class);
 
     // Toggle status
     Route::match(['post', 'patch'], 'users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    
+    // Approbation des polices
+    Route::post('polices/{police}/approve', [\App\Http\Controllers\Admin\PoliceController::class, 'approve'])->name('polices.approve');
 });
 
 
